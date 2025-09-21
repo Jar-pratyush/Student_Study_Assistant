@@ -1,0 +1,45 @@
+from groq import Groq
+
+def load_document(file_path):
+    """
+    Load the text from a file and return its content.
+
+    Args: 
+        file_path (str): Path to the text file.
+
+    Returns:
+        str : Entire file content as a single string
+    """
+    try:
+        with open(file_path,'r') as file:
+            content = file.read() 
+        return content
+    except FileNotFoundError:
+        return f"Error : The file {file_path} you're looking for cannot be found."
+    except Exception as e:
+        return f"An unknow error {e} occured. Please try again."
+
+def chunk_text(text,chunk_size=300,overlap=50):
+    """
+    Split the text into chunks of specified size with overlap.
+    
+    Args:
+        text (str): The full text of the document.
+        chunk_size (int): Maximum number of words per chunk.
+        overlap (int): Number of overlapping words between chunks.
+
+    Returns:
+        list: List of chunks of text (each as a string).
+    """
+
+    words = text.split()
+    chunks = []
+    i = 0
+    n = len(words)
+    while i<n:
+        chunk_words = words[i:i+chunk_size]
+        if not chunk_words:
+            break
+        chunks.append(" ".join(chunk_words))
+        i+=chunk_size-overlap
+    return chunks
