@@ -63,9 +63,13 @@ Place your document as `document.txt` in the working directory, or adjust the fi
 
 ## Usage Example
 Loading Document...
+
 Splitting into chunks...
+
 Enter your question: What are the main points of chapter three?
+
 Answer:
+
 <AI-generated answer based on the best-matching section>
 
 
