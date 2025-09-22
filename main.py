@@ -113,3 +113,39 @@ def get_answer_from_groq(prompt,api_key):
         max_completion_tokens = 512
     )
     return chat_completion.choices[0].message.content
+
+def get_api_key():
+    from dotenv import load_dotenv
+    import os
+
+    load_dotenv()
+    api_key = os.environ.get("GROQ_API_KEY")
+    return api_key
+
+if __name__ == "__main__":
+    print("Loading Document...")
+    doc_content = load_document("document.txt")
+
+    print("Splitting into chunks...")
+    chunks = chunk_text(doc_content)
+
+    # Ask the user question
+    question = input("Enter your question: ").lower()
+
+    # Find the best chunk
+    best_chunk = get_best_chunk(chunks,question)
+
+    # Bulild the prompt
+    prompt = build_prompt(best_chunk,question)
+
+    # Retrieve the API key
+    api_key = get_api_key()
+
+    # Call Groq for reply
+    try:
+        reply = get_answer_from_groq(prompt,api_key)
+        print("\nAnswer: ")
+        print(reply.strip())
+    except Exception as e:
+         print(f"An unexpected error {e} occured. Please try again.")
+
