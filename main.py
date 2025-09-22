@@ -58,3 +58,24 @@ def score_chunk(chunk,keyowords):
     chunk_words = set(chunk.lower.split())
     return len(chunk_words & keyowords)
 
+def get_best_chunk(chunks,question):
+    """
+    Select the chunk that best matches the question.
+
+    Args:
+        chunks (list): List of text chunks.
+        question (str): User's input question.
+    
+    Returns: 
+        str: The chunk with the highest keywords overlap.
+    """
+    best_chunk = None
+    best_score = -1
+    keywords = set(question.lower().split())
+    for chunk in chunks:
+        score = score_chunk(chunk,keywords)
+        if score>best_score:
+            best_score = score
+            best_chunk = chunk
+    return best_chunk
+
