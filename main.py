@@ -79,3 +79,15 @@ def get_best_chunk(chunks,question):
             best_chunk = chunk
     return best_chunk
 
+def build_prompt(context,question):
+    """
+    Formatting the prompt with the context and question from the user.
+
+    Args:
+        context (str): Best-Matching text chunk.
+        questions (str): User's input question.
+    
+    Returns:
+        str: Prompt string formatted for the LLM.
+    """
+    return f"Context:\n{context}\n\nQuestion: {question}\nAnswer:"    
