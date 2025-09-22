@@ -43,3 +43,18 @@ def chunk_text(text,chunk_size=300,overlap=50):
         chunks.append(" ".join(chunk_words))
         i+=chunk_size-overlap
     return chunks
+
+def score_chunk(chunk,keyowords):
+    """
+    Computes a score for a given chunk based on the overlapping words with thep passed set of keywords.
+
+    Args:
+        chunk (str): A text chunk.
+        keywords (set): Set of keywords from the qusetion.
+    
+    Returns:
+        int: Number of overlapping words.
+    """
+    chunk_words = set(chunk.lower.split())
+    return len(chunk_words & keyowords)
+
