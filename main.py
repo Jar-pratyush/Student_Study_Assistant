@@ -91,3 +91,25 @@ def build_prompt(context,question):
         str: Prompt string formatted for the LLM.
     """
     return f"Context:\n{context}\n\nQuestion: {question}\nAnswer:"    
+
+def get_answer_from_groq(prompt,api_key):
+    """
+    Send the prompt to groq API and return the model's answer.
+
+    Args:
+        prompt (str): The input prompt containing context + question.
+        api_key (str): Groq API key either built in through env or provided directly by the user.
+    
+    Returns:
+        str: Model-Generated Answer.
+    """
+    client = Groq(api_key=api_key)
+    chat_completion = client.chat.completions.create(
+        messages=[
+            {"role":"user","content":prompt}
+        ],
+        model = "llama-3.3-70b-versatile",
+        temperature = 0.3,
+        max_completion_tokens = 512
+    )
+    return chat_completion.choices[0].message.content
